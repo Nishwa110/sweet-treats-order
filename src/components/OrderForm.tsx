@@ -76,7 +76,11 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="text-sm font-body font-semibold text-foreground">Name *</label>
-          <Input name="name" value={form.name} onChange={handleChange} placeholder="Your name" className="mt-1 rounded-xl" required />
+         <Input name="name" value={form.name} onChange={handleChange} placeholder="Your name" className="mt-1 rounded-xl" required />
+        </div>
+        <div>
+          <label className="text-sm font-body font-semibold text-foreground">Email *</label>
+          <Input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Your email address" className="mt-1 rounded-xl" required />
         </div>
         <div>
           <label className="text-sm font-body font-semibold text-foreground">Phone *</label>
