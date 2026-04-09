@@ -8,6 +8,9 @@ const MenuCard = ({ item }: { item: MenuItem }) => {
 
   return (
     <div className="group bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-float transition-all duration-300 hover:-translate-y-1">
+      <div className="aspect-square overflow-hidden">
+        <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+      </div>
       <div className="p-4 space-y-2">
         <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           {item.category}
