@@ -1,16 +1,29 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import HeroBanner from "@/components/HeroBanner";
+import MenuCard from "@/components/MenuCard";
+import CartDrawer from "@/components/CartDrawer";
+import { menuItems } from "@/data/menuItems";
 
-// IMPORTANT: Fully REPLACE this with your own code
-const PlaceholderIndex = () => {
-  // PLACEHOLDER: Replace this entire return statement with the user's app.
-  // The inline background color is intentionally not part of the design system.
+const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center" style={{ backgroundColor: '#fcfbf8' }}>
-      <img data-lovable-blank-page-placeholder="REMOVE_THIS" src="/placeholder.svg" alt="Your app will live here!" />
+    <div className="min-h-screen bg-background">
+      <HeroBanner />
+
+      <main className="max-w-6xl mx-auto px-4 py-10">
+        <h2 className="font-heading text-3xl text-center text-primary mb-8">Our Menu 🍰</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {menuItems.map((item) => (
+            <MenuCard key={item.id} item={item} />
+          ))}
+        </div>
+      </main>
+
+      <footer className="text-center py-8 text-muted-foreground text-sm font-body">
+        Made with 💕 — Sweet Treats Home Bakery
+      </footer>
+
+      <CartDrawer />
     </div>
   );
 };
-
-const Index = PlaceholderIndex;
 
 export default Index;

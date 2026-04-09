@@ -1,0 +1,100 @@
+import { useState } from "react";
+import { useCart } from "@/context/CartContext";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+interface OrderFormProps {
+  onBack: () => void;
+}
+
+const SELLER_EMAIL = "nishwashaikh135@gmail.com";
+
+const OrderForm = ({ onBack }: OrderFormProps) => {
+  const { items, totalPrice, clearCart } = useCart();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    notes: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim() || !form.address.trim()) {
+      toast({ title: "Please fill all required fields", variant: "destructive" });
+      return;
+    }
+
+    setLoading(true);
+
+    const orderDetails = items
+      .map((i) => `${i.name} x${i.quantity} — Rs. ${i.price * i.quantity}`)
+      .join("\n");
+
+    const emailBody = `New Order!\n\nCustomer: ${form.name}\nPhone: ${form.phone}\nAddress: ${form.address}\nNotes: ${form.notes || "None"}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
+
+    // Use mailto as a simple approach (no backend needed)
+    const mailtoLink = `mailto:${SELLER_EMAIL}?subject=${encodeURIComponent("New Sweet Order from " + form.name)}&body=${encodeURIComponent(emailBody)}`;
+
+    window.open(mailtoLink, "_blank");
+
+    setLoading(false);
+    setSubmitted(true);
+    clearCart();
+  };
+
+  if (submitted) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center text-center py-12 space-y-4">
+        <p className="text-5xl">🎉</p>
+        <h3 className="font-heading text-2xl text-primary">Order Sent!</h3>
+        <p className="text-muted-foreground font-body">
+          Your email app should have opened with the order details. Please send it to complete your order!
+        </p>
+        <p className="text-sm text-muted-foreground">We'll get back to you soon 💕</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 overflow-y-auto">
+      <button onClick={onBack} className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors">
+        <ArrowLeft className="w-4 h-4" /> Back to cart
+      </button>
+      <h3 className="font-heading text-xl text-primary mb-4">Your Details 💌</h3>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="text-sm font-body font-semibold text-foreground">Name *</label>
+          <Input name="name" value={form.name} onChange={handleChange} placeholder="Your name" className="mt-1 rounded-xl" required />
+        </div>
+        <div>
+          <label className="text-sm font-body font-semibold text-foreground">Phone *</label>
+          <Input name="phone" value={form.phone} onChange={handleChange} placeholder="Your phone number" className="mt-1 rounded-xl" required />
+        </div>
+        <div>
+          <label className="text-sm font-body font-semibold text-foreground">Delivery Address *</label>
+          <Textarea name="address" value={form.address} onChange={handleChange} placeholder="Full delivery address" className="mt-1 rounded-xl" required />
+        </div>
+        <div>
+          <label className="text-sm font-body font-semibold text-foreground">Special Notes</label>
+          <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any allergies or special requests?" className="mt-1 rounded-xl" />
+        </div>
+        <Button variant="cute" size="lg" type="submit" className="w-full text-base" disabled={loading}>
+          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "🎀 Send Order"}
+        </Button>
+      </form>
+    </div>
+  );
+};
+
+export default OrderForm;
