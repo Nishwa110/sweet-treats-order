@@ -45,7 +45,7 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
     const emailBody = `New Order!\n\nCustomer: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nAddress: ${form.address}\nNotes: ${form.notes || "None"}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
 
     // Use mailto as a simple approach (no backend needed)
-    const mailtoLink = `mailto:${SELLER_EMAIL}?subject=${encodeURIComponent("New Sweet Order from " + form.name)}&body=${encodeURIComponent(emailBody)}`;
+    const mailtoLink = `mailto:${nishwashaikh135@gmail.com}?subject=${encodeURIComponent("New Sweet Order from " + form.name)}&body=${encodeURIComponent(emailBody)}`;
 
     window.open(mailtoLink, "_blank");
 
