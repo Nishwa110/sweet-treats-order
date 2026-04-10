@@ -5,12 +5,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface OrderFormProps {
   onBack: () => void;
 }
-
-const SELLER_EMAIL = "nishwashaikh135@gmail.com";
 
 const OrderForm = ({ onBack }: OrderFormProps) => {
   const { items, totalPrice, clearCart } = useCart();
@@ -38,31 +37,42 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
 
     setLoading(true);
 
-    const orderDetails = items
-      .map((i) => `${i.name} x${i.quantity} — Rs. ${i.price * i.quantity}`)
-      .join("\n");
+    try {
+      const { error } = await supabase.from("orders").insert({
+        customer_name: form.name,
+        customer_email: form.email || null,
+        customer_phone: form.phone,
+        delivery_address: form.address,
+        notes: form.notes || null,
+        items: items.map((i) => ({
+          name: i.name,
+          quantity: i.quantity,
+          price: i.price,
+        })),
+        total_price: totalPrice,
+      });
 
-    const emailBody = `New Order!\n\nCustomer: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nAddress: ${form.address}\nNotes: ${form.notes || "None"}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
+      if (error) throw error;
 
-    // Use mailto as a simple approach (no backend needed)
-    const mailtoLink = `mailto:${nishwashaikh135@gmail.com}?subject=${encodeURIComponent("New Sweet Order from " + form.name)}&body=${encodeURIComponent(emailBody)}`;
-
-    window.open(mailtoLink, "_blank");
-
-    setLoading(false);
-    setSubmitted(true);
-    clearCart();
+      setSubmitted(true);
+      clearCart();
+    } catch (err) {
+      console.error("Order error:", err);
+      toast({ title: "Failed to place order. Please try again.", variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center text-center py-12 space-y-4">
         <p className="text-5xl">🎉</p>
-        <h3 className="font-heading text-2xl text-primary">Order Sent!</h3>
+        <h3 className="font-heading text-2xl text-primary">Order Placed!</h3>
         <p className="text-muted-foreground font-body">
-          Your email app should have opened with the order details. Please send it to complete your order!
+          Your order has been received successfully. We'll get back to you soon!
         </p>
-        <p className="text-sm text-muted-foreground">We'll get back to you soon 💕</p>
+        <p className="text-sm text-muted-foreground">Thank you for your order 💕</p>
       </div>
     );
   }
@@ -76,11 +86,11 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="text-sm font-body font-semibold text-foreground">Name *</label>
-         <Input name="name" value={form.name} onChange={handleChange} placeholder="Your name" className="mt-1 rounded-xl" required />
+          <Input name="name" value={form.name} onChange={handleChange} placeholder="Your name" className="mt-1 rounded-xl" required />
         </div>
         <div>
-          <label className="text-sm font-body font-semibold text-foreground">Email *</label>
-          <Input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Your email address" className="mt-1 rounded-xl" required />
+          <label className="text-sm font-body font-semibold text-foreground">Email</label>
+          <Input name="email" type="email" value={form.email} onChange={handleChange} placeholder="Your email address (optional)" className="mt-1 rounded-xl" />
         </div>
         <div>
           <label className="text-sm font-body font-semibold text-foreground">Phone *</label>
@@ -95,7 +105,7 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
           <Textarea name="notes" value={form.notes} onChange={handleChange} placeholder="Any allergies or special requests?" className="mt-1 rounded-xl" />
         </div>
         <Button variant="cute" size="lg" type="submit" className="w-full text-base" disabled={loading}>
-          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "🎀 Send Order"}
+          {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : "🎀 Place Order"}
         </Button>
       </form>
     </div>
