@@ -42,7 +42,7 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
       .map((i) => `${i.name} x${i.quantity} — Rs. ${i.price * i.quantity}`)
       .join("\n");
 
-    const emailBody = `New Order!\n\nCustomer: ${form.name}\nPhone: ${form.phone}\nAddress: ${form.address}\nNotes: ${form.notes || "None"}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
+    const emailBody = `New Order!\n\nCustomer: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nAddress: ${form.address}\nNotes: ${form.notes || "None"}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
 
     // Use mailto as a simple approach (no backend needed)
     const mailtoLink = `mailto:${SELLER_EMAIL}?subject=${encodeURIComponent("New Sweet Order from " + form.name)}&body=${encodeURIComponent(emailBody)}`;
