@@ -3,8 +3,10 @@ import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+const SELLER_WHATSAPP = "923150204505";
 import { supabase } from "@/integrations/supabase/client";
 
 interface OrderFormProps {
@@ -16,6 +18,7 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [whatsappLink, setWhatsappLink] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -54,6 +57,14 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
 
       if (error) throw error;
 
+      // Build WhatsApp message
+      const orderDetails = items
+        .map((i) => `${i.name} x${i.quantity} — Rs. ${i.price * i.quantity}`)
+        .join("\n");
+      const whatsappMsg = `🎀 New Order!\n\nName: ${form.name}\nPhone: ${form.phone}\nAddress: ${form.address}${form.notes ? `\nNotes: ${form.notes}` : ""}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
+      const whatsappUrl = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(whatsappMsg)}`;
+
+      setWhatsappLink(whatsappUrl);
       setSubmitted(true);
       clearCart();
     } catch (err) {
@@ -70,8 +81,16 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
         <p className="text-5xl">🎉</p>
         <h3 className="font-heading text-2xl text-primary">Order Placed!</h3>
         <p className="text-muted-foreground font-body">
-          Your order has been received successfully. We'll get back to you soon!
+          Your order has been received! Send us a message on WhatsApp to confirm.
         </p>
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white font-bold py-3 px-6 rounded-full transition-colors text-base"
+        >
+          <MessageCircle className="w-5 h-5" /> Confirm on WhatsApp
+        </a>
         <p className="text-sm text-muted-foreground">Thank you for your order 💕</p>
       </div>
     );
