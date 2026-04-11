@@ -81,8 +81,16 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
         <p className="text-5xl">🎉</p>
         <h3 className="font-heading text-2xl text-primary">Order Placed!</h3>
         <p className="text-muted-foreground font-body">
-          Your order has been received successfully. We'll get back to you soon!
+          Your order has been received! Send us a message on WhatsApp to confirm.
         </p>
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1da851] text-white font-bold py-3 px-6 rounded-full transition-colors text-base"
+        >
+          <MessageCircle className="w-5 h-5" /> Confirm on WhatsApp
+        </a>
         <p className="text-sm text-muted-foreground">Thank you for your order 💕</p>
       </div>
     );
