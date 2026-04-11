@@ -1,5 +1,4 @@
 import HeroBanner from "@/components/HeroBanner";
-import HeroBanner from "@/components/HeroBanner";
 import MenuCard from "@/components/MenuCard";
 import CartDrawer from "@/components/CartDrawer";
 import { menuItems } from "@/data/menuItems";
