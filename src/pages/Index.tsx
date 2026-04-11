@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import { Lock } from "lucide-react";
 import HeroBanner from "@/components/HeroBanner";
 import MenuCard from "@/components/MenuCard";
 import CartDrawer from "@/components/CartDrawer";
@@ -19,11 +17,8 @@ const Index = () => {
         </div>
       </main>
 
-      <footer className="text-center py-8 text-muted-foreground text-sm font-body space-y-2">
+      <footer className="text-center py-8 text-muted-foreground text-sm font-body">
         <p>Made with 💕 — Sweet Treats Home Bakery</p>
-        <Link to="/admin/orders" className="inline-flex items-center gap-1 text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors">
-          <Lock className="w-3 h-3" /> Admin
-        </Link>
       </footer>
 
       <CartDrawer />
