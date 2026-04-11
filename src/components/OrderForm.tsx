@@ -18,6 +18,7 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [whatsappLink, setWhatsappLink] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
