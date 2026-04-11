@@ -56,6 +56,14 @@ const OrderForm = ({ onBack }: OrderFormProps) => {
 
       if (error) throw error;
 
+      // Build WhatsApp message
+      const orderDetails = items
+        .map((i) => `${i.name} x${i.quantity} — Rs. ${i.price * i.quantity}`)
+        .join("\n");
+      const whatsappMsg = `🎀 New Order!\n\nName: ${form.name}\nPhone: ${form.phone}\nAddress: ${form.address}${form.notes ? `\nNotes: ${form.notes}` : ""}\n\nItems:\n${orderDetails}\n\nTotal: Rs. ${totalPrice}`;
+      const whatsappUrl = `https://wa.me/${SELLER_WHATSAPP}?text=${encodeURIComponent(whatsappMsg)}`;
+
+      setWhatsappLink(whatsappUrl);
       setSubmitted(true);
       clearCart();
     } catch (err) {
