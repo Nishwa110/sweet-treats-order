@@ -3,8 +3,10 @@ import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+
+const SELLER_WHATSAPP = "923150204505";
 import { supabase } from "@/integrations/supabase/client";
 
 interface OrderFormProps {
