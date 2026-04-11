@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Lock } from "lucide-react";
+import HeroBanner from "@/components/HeroBanner";
 import HeroBanner from "@/components/HeroBanner";
 import MenuCard from "@/components/MenuCard";
 import CartDrawer from "@/components/CartDrawer";
