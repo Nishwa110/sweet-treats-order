@@ -10,7 +10,7 @@ const HeroBanner = () => {
           Sweet Treats
         </h1>
         <p className="font-body text-lg md:text-xl text-foreground/80 font-medium">
-          Homemade with love 🩷 Brownies · Cakes · Sundaes & more
+          Homemade with love Brownies · Cakes · Sundaes & more
         </p>
       </div>
     </div>
