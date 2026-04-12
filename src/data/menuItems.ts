@@ -4,6 +4,10 @@ import sundaeImg from "@/assets/sundae.jpg";
 import cookiesImg from "@/assets/cookies.jpg";
 import cheesecakeImg from "@/assets/cheesecake.jpg";
 import cupcakeImg from "@/assets/cupcake.jpg";
+import tiramisuImg from "@/assets/tiramisu.jpg";
+import redvelvetImg from "@/assets/redvelvet.jpg";
+import wafflesImg from "@/assets/waffles.jpg";
+import lavacakeImg from "@/assets/lavacake.jpg";
 
 export interface MenuItem {
   id: string;
