@@ -4,6 +4,10 @@ import sundaeImg from "@/assets/sundae.jpg";
 import cookiesImg from "@/assets/cookies.jpg";
 import cheesecakeImg from "@/assets/cheesecake.jpg";
 import cupcakeImg from "@/assets/cupcake.jpg";
+import tiramisuImg from "@/assets/tiramisu.jpg";
+import redvelvetImg from "@/assets/redvelvet.jpg";
+import wafflesImg from "@/assets/waffles.jpg";
+import lavacakeImg from "@/assets/lavacake.jpg";
 
 export interface MenuItem {
   id: string;
@@ -62,5 +66,37 @@ export const menuItems: MenuItem[] = [
     price: 250,
     image: cupcakeImg,
     category: "Cupcakes",
+  },
+  {
+    id: "tiramisu-classic",
+    name: "Classic Tiramisu",
+    description: "Layers of coffee-soaked ladyfingers & mascarpone cream",
+    price: 500,
+    image: tiramisuImg,
+    category: "Desserts",
+  },
+  {
+    id: "cake-redvelvet",
+    name: "Red Velvet Cake",
+    description: "Vibrant red layers with silky cream cheese frosting",
+    price: 1600,
+    image: redvelvetImg,
+    category: "Cakes",
+  },
+  {
+    id: "waffles-strawberry",
+    name: "Strawberry Waffles",
+    description: "Golden crispy waffles with fresh strawberries & cream",
+    price: 400,
+    image: wafflesImg,
+    category: "Waffles",
+  },
+  {
+    id: "lavacake-choco",
+    name: "Chocolate Lava Cake",
+    description: "Warm cake with a molten chocolate center, pure indulgence",
+    price: 600,
+    image: lavacakeImg,
+    category: "Cakes",
   },
 ];
