@@ -7,7 +7,7 @@ const HeroBanner = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent" />
       <div className="absolute bottom-8 left-0 right-0 text-center px-4">
         <h1 className="font-heading text-4xl md:text-6xl text-primary drop-shadow-lg mb-2">
-          Sweet Treats
+          Sweet Treats Bakery
         </h1>
         <p className="font-body text-lg md:text-xl text-foreground/80 font-medium">
           Homemade with love Brownies · Cakes · Sundaes & more
