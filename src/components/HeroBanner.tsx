@@ -10,7 +10,7 @@ const HeroBanner = () => {
           Sweet Treats Bakery
         </h1>
         <p className="font-body text-lg md:text-xl text-foreground/80 font-medium">
-          Homemade with love Brownies · Cakes · Sundaes & more
+          A Little Slice of Happiness — Brownies · Cakes · Sundaes & More
         </p>
       </div>
     </div>
